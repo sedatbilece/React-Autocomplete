@@ -2,25 +2,6 @@ import './App.css';
 import {useEffect, useState,useRef} from 'react';
 
 
-const data =[
-  {
-    id:1,
-    title:'test 1'
-  },
-  {
-    id:2,
-    title:'Test 2'
-  },
-  {
-    id:3,
-    title:'deneme 1'
-  },
-  {
-    id:4,
-    title:'deneme 2'
-  }
-
-]
 
 function App() {
   const [search, setSearch] = useState('');
@@ -29,13 +10,30 @@ function App() {
 
   const isTyping = search.replace(/\s+/g,'').length > 0;
 
+ 
+
+
   useEffect(()=>{
     if(isTyping){
-     const  filteredResult= data.filter(item => item.title.toLocaleLowerCase().includes(search.toLocaleLowerCase() ))
-      setResult( filteredResult.length>0 ? filteredResult:false);
+     
     }else{
       setResult(false)
     }
+       
+     const getData = setTimeout(() => {
+      fetch(`http://localhost/backend.php?query=${search}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      setResult(data)
+      
+    })
+     }, 250);
+
+     return ()=>{
+        clearTimeout(getData)
+
+     }
   },[search])
 
   useEffect(()=>{
@@ -69,10 +67,10 @@ function App() {
         <div className='search-result'>
                {result && result.map(item =>(
                 <div key={item.id} className='search-result-item'>
-                  {item.title}
+                  <img  src={item.image} className='item-image'/> <div className='title'>{item.title}</div>
                 </div>
                ) ) }
-               {!result &&(
+               {!result && (
                 <div className='result-not-found'>
                   "{search}" not found
                   </div>

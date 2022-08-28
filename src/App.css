@@ -35,7 +35,13 @@ body{
 }
 
 .search .search-result .search-result-item{
+  display: flex;
+  flex-direction: row;
+  
   padding:10px 15px;
+}
+.search .search-result .search-result-item:hover{
+  background-color: whitesmoke
 }
 .search input.typing{
   border-radius: 5px 5px 0 0 ;
@@ -45,4 +51,11 @@ body{
   text-align: center;
   font-size: 14px;
   opacity: 0.5;
+}
+.item-image{
+  width: 40px;
+  height: auto;
+}
+.title{
+  margin-left: 10px;
 }
